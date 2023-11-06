@@ -7,15 +7,15 @@ Input expression = 9+3 , length = 3
 Invalid expression First character must be '('
 
 java Calculator ((1)+1)
-Input expression = ((1)+1) , length = 7
-Invalid expression There is something wrong with the expression
+    Input expression = ((1)+1) , length = 7
+    Invalid expression There is something wrong with the expression
 ((1)+1)
-   ^   
+    ^
 
-java Calculator (2+1
-Input expression = (2+1 , length = 4
-Invalid expression Last character must be ')'
+    java Calculator (2+1
+            Input expression = (2+1 , length = 4
+                Invalid expression Last character must be ')'
 
-java Calculator 1+2)
-Input expression = 1+2) , length = 4
-Invalid expression First character must be '('
+                java Calculator 1+2)
+            Input expression = 1+2) , length = 4
+    Invalid expression First character must be '('
