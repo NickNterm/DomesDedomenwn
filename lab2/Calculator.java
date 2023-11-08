@@ -3,8 +3,8 @@
 import java.io.* ;
 
 public class Calculator
-{   
-    private static void Calculate(String expr) 
+{
+    private static void Calculate(String expr)
     {
         int N = expr.length();
         char[] a = expr.toCharArray();  // store expression in an character array
@@ -35,8 +35,8 @@ public class Calculator
                 while ((a[i] >='0') && (a[i] <= '9')) {
                     x = 10*x + (a[i++]-'0'); //converts char to int
                 }                            // also checks if number is multi-digit
-                                             //the loop runs as long as next char is number
-                                             //it keeps previous digits on x and adds the new one
+                //the loop runs as long as next char is number
+                //it keeps previous digits on x and adds the new one
                 values.push(x);
                 formatting.push('n');        //whenever a number is pushed in values,
                                              //"n" is pushed in formatting stack
@@ -46,9 +46,9 @@ public class Calculator
                 formatting.push('o'); //"o" is pushed in formatting stack
             }else if(a[i] == ')'){
                 /*this is a check for errors in formatting
-                when c=")" the program finds the previous 4 elements
-                if they follow the format "(", number, operator, number 
-                the program procceeds to calculate the result within the parenthesis*/ 
+                  when c=")" the program finds the previous 4 elements
+                  if they follow the format "(", number, operator, number
+                  the program procceeds to calculate the result within the parenthesis*/
                 try {
                     char f3 = formatting.pop(); // n stands for number
                     char f2 = formatting.pop(); // o for operator
@@ -111,12 +111,12 @@ public class Calculator
                 return 0;
         }
     }
-    
+
     public static void main(String[] args)
     {
         String expr = args[0];
         System.out.println("Input expression = " + expr + " , length = " + expr.length());
-                
+
         Calculate(expr);
     }
 }
