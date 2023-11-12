@@ -3,17 +3,15 @@ import java.io.*;
 
 public class Tree {
 
-    private final int N;              // number of tree nodes
-    private int[] preorder;        // preorder numbering of nodes
-    private int[] postorder;      // postorder numbering of nodes
-    private int root;                 // root of the tree
+    private final int N; // number of tree nodes
+    private int[] preorder; // preorder numbering of nodes
+    private int[] postorder; // postorder numbering of nodes
+    private int root; // root of the tree
 
-    private Stack<Integer>[] children;  // children
-
-    private Queue<Integer> preorderStack = new Queue<Integer>();
-    private Queue<Integer> postorderStack = new Queue<Integer>();
+    private Stack<Integer>[] children; // children
 
     private int[] parent;
+
     // construct children lists from parent array
     public Tree(int N, int[] parent) {
         this.N = N;
@@ -27,14 +25,13 @@ public class Tree {
 
         children = new Stack[N];
 
-        for(int j = 0; j<N; j++){
+        for (int j = 0; j < N; j++) {
             children[j] = new Stack<Integer>();
-            if(parent[j] == j){
+            if (parent[j] == j) {
                 root = j;
             }
-            for (int i = 0; i < N; i++){
-                if(parent[i] == j && i != j){
-                    // tote einai paidi toy
+            for (int i = 0; i < N; i++) {
+                if (parent[i] == j && i != j) {
                     children[j].push(i);
                 }
             }
@@ -44,122 +41,75 @@ public class Tree {
     // traverse tree and store preorder and postorder numbering of the nodes
     public void traverse() {
         makeOrder(root);
-        for(int i = 0; i<N; i++){
-            preorder[i] = preorderStack.get();
-            postorder[i] = postorderStack.get();
-        }
     }
 
-    public void makeOrder(int id){
-        // put id in preorder cause it's always the 
-        // first node to be visited
-        preorderStack.put(id);
-        // if the stack is empty then there are 
-        // no children so we can put it in postorder
-        if(children[id].isEmpty()){
-            postorderStack.put(id);
-            // also don't move on to the children
-            return;
-        }
-        // else we have to visit the children
+    int preorderCount = 1;
+    int postorderCount = 1;
+
+    public void makeOrder(int id) {
+        // preoorder counter is the number of the
+        // node in the list that we search
+        preorder[id] = preorderCount;
+        preorderCount++;
+        // for loop in the children of the node
         int size = children[id].size();
-        for(int i = 0; i < size; i++){
-            // pop the children
-            int child = children[id].pop();
-            // and make order with that child
-            makeOrder(child);
+        for (int i = 0; i < size; i++) {
+            // pop a childer and make order of this
+            makeOrder(children[id].pop());
         }
-        // also in the end when we have visited 
-        // all the children we can 
-        // put it in postorder
-        postorderStack.put(id);
+        // when it ends you can put the postorder number
+        postorder[id] = postorderCount;
+        postorderCount++;
     }
-
 
     // test if v is an ancestor of w
     public boolean isAncestor(int v, int w) {
-        boolean ans = false;
-        // check the v preorder and postorder id
-        int vIndexPre = -1;
-        int vIndexPost = -1;
-        // check the w preorder and postorder id
-        int wIndexPre = -1;
-        int wIndexPost = -1;
-        for(int i = 0; i<N; i++){
-            if(preorder[i] == v){
-                vIndexPre = i;
-            }
-            if(postorder[i] == v){
-                vIndexPost = i;
-            }
-            if(preorder[i] == w){
-                wIndexPre = i;
-            }
-            if(postorder[i] == w){
-                wIndexPost = i;
-            }
-        }
-        // if something is missing say false
-        if(vIndexPre == -1 || vIndexPost == -1 || wIndexPre == -1 || wIndexPost == -1){
-            System.out.println("elousa");
-            return false;
-        }
-        // then check the ids and if there
-        // is a case that v is an ancestor of w
-        // then v is ancestor and return true
-        if(vIndexPre < wIndexPre && vIndexPost > wIndexPost){
-            ans = true;
-        }
-        return ans;
+        return preorder[v] <= preorder[w] && postorder[v] >= postorder[w];
     }
 
-    // return the path from v to w in the tree  
+    // return the path from v to w in the tree
     public Queue<Integer> treePath(int v, int w) {
         Queue<Integer> Q = new Queue<Integer>();
         Stack<Integer> S = new Stack<Integer>();
-        // select to node pou einai pio katw aristera. dld me to mikrotero postorder
-        while((!isAncestor(v, w) && !isAncestor(w, v)) || w == v){
+
+        if (v == w) {
+            Q.put(v);
+            return Q;
+        }
+
+        while (!(isAncestor(v, w) || isAncestor(w, v))) {
             Q.put(v);
             v = parent[v];
         }
 
-        int prev = -1;
-        int prew = -1;
-        for(int i = 0; i<N; i++){
-            if(preorder[i] == v){
-                prev = i;
-            }
-            if(preorder[i] == w){
-                prew = i;
-            }
-        }
-        while(v != w){
-            if(prev > prew){
-                S.push(v);
-                v = parent[v];
-            }else{
+        // apo edw kai katw einai ancestors
+        if (isAncestor(v, w)) {
+            while (v != w) {
                 S.push(w);
                 w = parent[w];
             }
+            S.push(v);
+            int size = S.size();
+            for (int i = 0; i < size; i++) {
+                Q.put(S.pop());
+            }
+            return Q;
         }
-        S.push(w);
-
-        int size = S.size();
-        for(int i = 0; i < size; i++){
-            Q.put(S.pop());
+        while (v != w) {
+            Q.put(v);
+            v = parent[v];
         }
+        Q.put(v);
         return Q;
     }
 
     public void printQueue(Queue<Integer> Q) {
-        // remove comments if Queue is ready
-        
-        while ( !Q.isEmpty() ) {
+        while (!Q.isEmpty()) {
             int x = Q.get();
             System.out.print(" " + x + " ");
         }
         System.out.println("");
-       
+
     }
 
     public static void main(String[] args) {
