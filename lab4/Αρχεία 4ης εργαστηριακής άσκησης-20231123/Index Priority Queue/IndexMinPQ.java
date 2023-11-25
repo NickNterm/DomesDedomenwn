@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Random;
 
 // minimum index priority queue implemented with a binary heap
 public class IndexMinPQ<Key extends Comparable<Key>>
