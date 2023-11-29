@@ -1,3 +1,4 @@
+//Group 1 Pavlos Anagnostou 5440 Nikolaos Ntermaris 5477
 import java.util.Iterator;
 
 // linked list implementation of a collection of items
@@ -30,6 +31,7 @@ public class Collection<Item> implements Iterable<Item> {
         insert(item);
     }
 
+    @Override
     public Iterator<Item> iterator()
     {
         return new CollectionIterator();
@@ -38,13 +40,16 @@ public class Collection<Item> implements Iterable<Item> {
     {
         private Node current = head;
 
+        @Override
         public boolean hasNext()
         {
             return current!=null;
         }
 
+        @Override
         public void remove() {}
         
+        @Override
         public Item next()
         {
             Item item = current.item;

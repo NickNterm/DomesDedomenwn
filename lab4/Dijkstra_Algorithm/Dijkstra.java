@@ -1,12 +1,12 @@
-import java.io.* ;
+//Group 1 Pavlos Anagnostou 5440 Nikolaos Ntermaris 5477
 
 // compute shortest paths from a source vertex s
 public class Dijkstra
 {
     private static DirectedEdge[] edgeTo;        // last edge in shortest path
     private static long[] distTo;                // distance from source
-    private static NaiveIndexMinPQ<Long> PQ;
-    //private static IndexMinPQ<Long> PQ;
+    //private static NaiveIndexMinPQ<Long> PQ;
+    private static IndexMinPQ<Long> PQ;
 
     // update distances of neighbours of node v
     private static void relax(EdgeWeightedDigraph G, int v) {
@@ -32,8 +32,8 @@ public class Dijkstra
         }
         distTo[s] = 0;
 
-        PQ = new NaiveIndexMinPQ<Long>(N);
-        //PQ = new IndexMinPQ<Long>(N);
+        //PQ = new NaiveIndexMinPQ<Long>(N);
+        PQ = new IndexMinPQ<Long>(N);
         PQ.insert(s,distTo[s]);
         int v=-1;
         while (!PQ.isEmpty()) {
@@ -50,9 +50,14 @@ public class Dijkstra
     public static long diameter(EdgeWeightedDigraph G)
     {
         long diam = 0;
-        
-        /* enter your code! */
-        
+        for (int i=0; i<G.nodes(); i++)
+        {
+            Dijkstra(G,i);
+            for (int j=0; j<G.nodes(); j++)
+            {
+                if (distTo[j] > diam && distTo[j] != Long.MAX_VALUE) diam = distTo[j];
+            }
+        }
         return diam;
     }
 

@@ -1,4 +1,9 @@
+<<<<<<< HEAD:lab4/Αρχεία 4ης εργαστηριακής άσκησης-20231123/Index Priority Queue/IndexMinPQ.java
+//test
 import java.io.*;
+=======
+//Group 1 Pavlos Anagnostou 5440 Nikolaos Ntermaris 5477
+>>>>>>> nick:lab4/Dijkstra_Algorithm/NaiveIndexMinPQ.java
 import java.util.Random;
 
 // minimum index priority queue implemented with an unsorted array
