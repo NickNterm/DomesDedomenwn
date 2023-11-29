@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Random;
 
 // minimum index priority queue implemented with an unsorted array
 public class NaiveIndexMinPQ<Key extends Comparable<Key>>
