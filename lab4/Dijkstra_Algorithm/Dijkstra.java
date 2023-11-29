@@ -1,3 +1,4 @@
+//Group 1 Pavlos Anagnostou 5440 Nikolaos Ntermaris 5477
 
 // compute shortest paths from a source vertex s
 public class Dijkstra
@@ -40,8 +41,8 @@ public class Dijkstra
             relax(G,v);
         }
        
-        //System.out.println("distance from " + s + " to " + N/2 + " = " + distTo[N/2]);
-        //System.out.println("distance from " + s + " to " + (N-2) + " = " + distTo[N-2]);
+        System.out.println("distance from " + s + " to " + N/2 + " = " + distTo[N/2]);
+        System.out.println("distance from " + s + " to " + (N-2) + " = " + distTo[N-2]);
     }
     
     
@@ -51,9 +52,6 @@ public class Dijkstra
         long diam = 0;
         for (int i=0; i<G.nodes(); i++)
         {
-            if (i%1000 == 0){
-              System.out.println("computing diameter from node " + i);
-            }
             Dijkstra(G,i);
             for (int j=0; j<G.nodes(); j++)
             {
