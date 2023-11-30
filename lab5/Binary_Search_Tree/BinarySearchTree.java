@@ -1,6 +1,4 @@
-
-import java.io.*;
-import java.util.Random;
+import java.util.*;
 
 public class BinarySearchTree<Key extends Comparable<Key>, Item> {
 
@@ -159,14 +157,33 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
     
     // return the number of keys in the interval [k,m]
     public int range(Key k, Key m) {
+        int kRank = rank(k);
+        int mRank = rank(m);
 
-        int count = 0;
-        
-        /* enter your code! */
-        
-        return count; 
+        if (kRank > mRank) {
+          return kRank - mRank;
+        }else{
+          return mRank - kRank;
+        }
     }
 
+    private int rank(BSTreeNode x, Key key) {
+        if (x == null) {
+            return 0;
+        }
+        int c = key.compareTo(x.key);
+        if (c < 0) {
+            return rank(x.left, key);
+        } else if (c > 0) {
+            return 1 + getN(x.left) + rank(x.right, key);
+        } else {
+            return getN(x.left);
+        }
+    }
+
+    public int rank(Key key) {
+        return rank(root, key);
+    }
     public static void main(String[] args) {
         System.out.println("Test Binary Search Tree");
         int n = Integer.parseInt(args[0]);

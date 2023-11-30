@@ -1,8 +1,4 @@
-
-import java.io.*;
-import java.util.Random;
-import java.util.TreeMap;
-import java.util.Map;
+import java.util.*;
 
 public class TreeMapTest {
 
