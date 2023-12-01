@@ -67,75 +67,81 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
     }
 
     private void fix(BSTreeNode x) {
+        // case 0 x == root
+        // color it black and return
         if (x == root) {
             x.isRed = false;
             return;
         }
-        BSTreeNode y, z, uncle, w;
+        BSTreeNode uncle;
 
-        y = x.parent;
-        if (!y.isRed) {
-            updatePath(y);
-            return;
-        }
-
-        z = w = y.parent;
-
-        if (y.parent.left == y) {
-            uncle = y.parent.right;
-        } else {
-            uncle = y.parent.left;
-        }
-
-        while (true) {
-            if (isRed(uncle)) {
-                // here periptwsi 1
-                if (y.parent.left == y) {
-                    if (y.left == x) {
-                        rotateRight(z);
-                        z.isRed = true;
-                        y.isRed = false;
-                    } else {
-                        rotateLeft(y);
-                        rotateRight(z);
-                        z.isRed = true;
-                        x.isRed = false;
-                    }
-                } else {
-                    if (y.right == x) {
-                        rotateLeft(z);
-                        z.isRed = true;
-                        y.isRed = false;
-                    } else {
-                        rotateRight(y);
-                        rotateLeft(z);
-                        z.isRed = true;
-                        x.isRed = false;
-                    }
-                }
-
+        while (isRed(x.parent)) {
+            // in the start i just set the x and loop keeps going
+            if (x.parent.parent == null) {
+                // parent is root
+                root.isRed = false;
+                return;
+            }
+            if (x.parent.parent.left == x.parent) {
+                uncle = x.parent.parent.right;
             } else {
-                // here periptwsi 2
-                y.isRed = false;
-                if (uncle != null) {
+                uncle = x.parent.parent.left;
+            }
+            // when the uncle is black
+            if (x.parent.parent.left == x.parent) {
+                if (isRed(uncle)) {
+                    x.parent.isRed = false;
                     uncle.isRed = false;
-                }
-                z.isRed = true;
-                if (z == root) {
-                    z.isRed = false;
-                    return;
-                }
-                if (y.parent != null) {
-                    x = y.parent;
-                    if (x.parent == null) {
-                        root = x;
-                        x.isRed = false;
-                        return;
+                    x.parent.parent.isRed = true;
+                    // now the fault is in grandparent
+                    updateNode(x.parent);
+                    updateNode(x);
+                    x = x.parent.parent;
+                } else {
+                    if (x.parent.right == x) {
+                        // Left Triangle Case
+                        x = x.parent;
+                        rotateLeft(x);
                     }
+                    // Left Line Case
+                    if (x.parent.parent == null) {
+                        root = x.parent;
+                    } else {
+                        x.parent.parent.isRed = true;
+                    }
+                    x.parent.isRed = false;
+                    rotateRight(x.parent.parent);
+                }
+            } else {
+                if (isRed(uncle)) {
+                    x.parent.isRed = false;
+                    uncle.isRed = false;
+                    x.parent.parent.isRed = true;
+                    // now the fault is in grandparent
+                    updateNode(x.parent);
+                    updateNode(x);
+                    x = x.parent.parent;
+                } else {
+                    if (x.parent.left == x) {
+                        // Right Triangle Case
+                        x = x.parent;
+                        rotateRight(x);
+                    }
+                    // Right Line Case
+                    if (x.parent.parent == null) {
+                        root = x.parent;
+                    } else {
+                        x.parent.parent.isRed = true;
+                    }
+                    x.parent.isRed = false;
+                    rotateLeft(x.parent.parent);
                 }
             }
-
         }
+        if (root.isRed) {
+            root.isRed = false;
+        }
+        updatePath(x);
     }
 
     // return the number of descendants of a node x; if x is null return 0
@@ -212,55 +218,55 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
     public void insert(Key key, Item item) {
         BSTreeNode v = insertNode(key, item);
         fix(v);
-        // updatePath(v);
+        updatePath(v);
     }
 
     private BSTreeNode rotateLeft(BSTreeNode x) {
         BSTreeNode y = x.right;
 
         x.right = y.left;
-        if (x.right != null) {
-            x.right.parent = x;
+        if (y.left != null) {
+            y.left.parent = x;
         }
 
-        y.left = x;
         y.parent = x.parent;
-        if (x.parent != null) {
-            if (x.parent.left == x) {
-                x.parent.left = y;
-            } else {
-                x.parent.right = y;
-            }
+        if (x.parent == null) {
+            root = y;
+        } else if (x.parent.left == x) {
+            x.parent.left = y;
+        } else {
+            x.parent.right = y;
         }
+        y.left = x;
         x.parent = y;
 
         updateNode(x);
         updateNode(y);
-
         return y;
     }
 
     private BSTreeNode rotateRight(BSTreeNode y) {
         BSTreeNode x = y.left;
 
-        if (root == y) {
-            root = x;
-        }
         y.left = x.right;
-        if (y.left != null) {
-            y.left.parent = y;
+        if (x.right != null) {
+            x.right.parent = y;
         }
 
-        x.right = y;
         x.parent = y.parent;
-        if (y.parent != null) {
-            if (y.parent.left == y) {
-                y.parent.left = x;
-            } else {
-                y.parent.right = x;
-            }
+        if (y.parent == null) {
+            root = x;
+        } else if (y.parent.left == y) {
+            y.parent.left = x;
+        } else {
+            y.parent.right = x;
         }
+        x.right = y;
         y.parent = x;
+
+        // updatePath(x);
+        // updatePath(y);
+
         updateNode(y);
         updateNode(x);
         return x;
@@ -275,7 +281,11 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
         for (int i = 0; i < level; i++) {
             System.out.print("\t");
         }
-        System.out.println("" + v.key + "[" + v.height + "," + v.N + "]");
+        char color = 'B';
+        if (v.isRed) {
+            color = 'R';
+        }
+        System.out.println(color + " " + v.key + "[" + v.height + "," + v.N + "]");
         printNode(v.left, level + 1);
     }
 
@@ -292,10 +302,15 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
         int kRank = rank(k);
         int mRank = rank(m);
 
+        int extraCount = 0;
+        if (searchNode(m).key.compareTo(m) == 0) {
+            extraCount++;
+        }
+
         if (kRank > mRank) {
-            return kRank - mRank;
+            return kRank - mRank + extraCount;
         } else {
-            return mRank - kRank;
+            return mRank - kRank + extraCount;
         }
     }
 
@@ -318,16 +333,20 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
     }
 
     public static void main(String[] args) {
-        System.out.println("Test Binary Search Tree");
+        System.out.println("Test RedBlack Search Tree");
         int n = Integer.parseInt(args[0]);
         System.out.println("number of keys n = " + n);
 
-        RedBlackTree T = new RedBlackTree<Integer, String>();
+        RedBlackTree<Integer, String> T = new RedBlackTree<Integer, String>();
+        Scanner sc = new Scanner(System.in);
 
         Random rand = new Random(0);
         int[] keys = new int[n];
         for (int i = 0; i < n; i++) { // store n random numbers in [0,2n)
+            // keys[i] = sc.nextInt();
             keys[i] = rand.nextInt(2 * n);
+
+            System.out.println("key = " + keys[i]);
         }
 
         long startTime = System.currentTimeMillis();
