@@ -1,3 +1,5 @@
+//Group 1 Pavlos Anagnostou 5440 Nikolaos Ntermaris 5477
+
 import java.util.*;
 
 public class RedBlackTree<Key extends Comparable<Key>, Item> {
@@ -75,7 +77,6 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
         }
 
         BSTreeNode uncle;
-        // System.out.println("x = " + x.key);
         if (!isRed(x.parent)) {
             return;
         }
@@ -95,7 +96,6 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
             // when the uncle is black
             if (x.parent.parent.left == x.parent) {
                 if (isRed(uncle)) {
-                    // System.out.println("EIMAI EDW RED LEFT");
                     x.parent.isRed = false;
                     uncle.isRed = false;
                     x.parent.parent.isRed = true;
@@ -104,14 +104,11 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
                     updateNode(x);
                     x = x.parent.parent;
                 } else {
-                    // System.out.println("EIMAI EDW BLACK LEFT");
                     if (x.parent.right == x) {
-                        // System.out.println("EIMAI EDW BLACK RIGHT");
                         // Left Triangle Case
                         x = x.parent;
                         rotateLeft(x);
                     }
-                    // System.out.println("EIMAI EDW BLACK LEFT");
                     // Left Line Case
                     if (x.parent.parent == null) {
                         root = x.parent;
@@ -123,7 +120,6 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
                 }
             } else {
                 if (isRed(uncle)) {
-                    // System.out.println("EIMAI EDW RED RIGHT");
                     x.parent.isRed = false;
                     uncle.isRed = false;
                     x.parent.parent.isRed = true;
@@ -132,7 +128,6 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
                     updateNode(x);
                     x = x.parent.parent;
                 } else {
-                    // System.out.println("EIMAI EDW BLACK RIGHT");
                     if (x.parent.left == x) {
                         // Right Triangle Case
                         x = x.parent;
@@ -357,22 +352,18 @@ public class RedBlackTree<Key extends Comparable<Key>, Item> {
         Random rand = new Random(0);
         int[] keys = new int[n];
         for (int i = 0; i < n; i++) { // store n random numbers in [0,2n)
-            // keys[i] = sc.nextInt();
             keys[i] = rand.nextInt(2 * n);
-
-            System.out.println("key = " + keys[i]);
         }
 
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < n; i++) {
             String item = "item" + i;
             T.insert(keys[i], item);
-            // T.print();
         }
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println("construction time = " + totalTime);
-        // T.print();
+        T.print();
         System.out.println("tree height = " + T.getTreeHeight());
 
         startTime = System.currentTimeMillis();
