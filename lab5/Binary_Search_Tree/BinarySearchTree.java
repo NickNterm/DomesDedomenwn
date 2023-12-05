@@ -1,20 +1,18 @@
-
-import java.io.*;
-import java.util.Random;
+import java.util.*;
 
 public class BinarySearchTree<Key extends Comparable<Key>, Item> {
 
-    BSTreeNode root;        // root of binary search tree
+    BSTreeNode root; // root of binary search tree
 
     class BSTreeNode {
 
-        Key key;            // key associated with the item stored at node
-        Item item;          // item stored at node
-        BSTreeNode left;    // left child
-        BSTreeNode right;   // right child
-        BSTreeNode parent;  // node's parent
-        int height;         // node's height
-        int N;              // number of descendants
+        Key key; // key associated with the item stored at node
+        Item item; // item stored at node
+        BSTreeNode left; // left child
+        BSTreeNode right; // right child
+        BSTreeNode parent; // node's parent
+        int height; // node's height
+        int N; // number of descendants
 
         // create new node
         BSTreeNode(Key key, Item item, BSTreeNode parent) {
@@ -26,12 +24,12 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         }
     }
 
-    // search for item with key; returns the last node on the search path 
+    // search for item with key; returns the last node on the search path
     BSTreeNode searchNode(Key key) {
         BSTreeNode v = root;
         BSTreeNode pv = null; // parent of v
         while (v != null) {
-            int c = key.compareTo(v.key);  // compare with the key of node v
+            int c = key.compareTo(v.key); // compare with the key of node v
             pv = v;
             if (c < 0) {
                 v = v.left;
@@ -52,9 +50,9 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         BSTreeNode v = searchNode(key);
         int c = key.compareTo(v.key);
         if (c == 0) {
-            return v.item;    // item found
+            return v.item; // item found
         } else {
-            return null;      // item not found
+            return null; // item not found
         }
     }
 
@@ -75,7 +73,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
             return x.N;
         }
     }
-    
+
     // update the height and the number of descendants of a node
     private void updateNode(BSTreeNode x) {
         int leftHeight = getHeight(x.left);
@@ -86,12 +84,12 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         } else {
             x.height = leftHeight + 1;
         }
-        
+
         int leftN = getN(x.left);
         int rightN = getN(x.right);
         x.N = leftN + rightN + 1;
     }
-    
+
     // update the height v's ancestors
     private void updatePath(BSTreeNode v) {
         BSTreeNode u = v;
@@ -100,7 +98,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
             u = u.parent;
         }
     }
-    
+
     // return the height of the binary search tree
     int getTreeHeight() {
         return getHeight(root);
@@ -126,14 +124,14 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         } else {
             v.right = u;
         }
-        
+
         return u;
     }
 
     // insert item with key
     public void insert(Key key, Item item) {
         BSTreeNode v = insertNode(key, item);
-        updatePath(v); 
+        updatePath(v);
     }
 
     // inorder traversal: prints the key of each node
@@ -156,15 +154,39 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         printNode(root, 0);
         System.out.println("");
     }
-    
+
     // return the number of keys in the interval [k,m]
     public int range(Key k, Key m) {
+        int kRank = rank(k);
+        int mRank = rank(m);
+        int extraCount = 0;
+        if (searchNode(m).key.compareTo(m) == 0) {
+            extraCount++;
+        }
 
-        int count = 0;
-        
-        /* enter your code! */
-        
-        return count; 
+        if (kRank > mRank) {
+            return kRank - mRank + extraCount;
+        } else {
+            return mRank - kRank + extraCount;
+        }
+    }
+
+    private int rank(BSTreeNode x, Key key) {
+        if (x == null) {
+            return 0;
+        }
+        int c = key.compareTo(x.key);
+        if (c < 0) {
+            return rank(x.left, key);
+        } else if (c > 0) {
+            return 1 + getN(x.left) + rank(x.right, key);
+        } else {
+            return getN(x.left);
+        }
+    }
+
+    public int rank(Key key) {
+        return rank(root, key);
     }
 
     public static void main(String[] args) {
@@ -177,7 +199,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         Random rand = new Random(0);
         int[] keys = new int[n];
         for (int i = 0; i < n; i++) { // store n random numbers in [0,2n)
-        	keys[i] = rand.nextInt(2*n);
+            keys[i] = rand.nextInt(2 * n);
         }
 
         long startTime = System.currentTimeMillis();
@@ -188,21 +210,21 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println("construction time = " + totalTime);
-        T.print();
+        // T.print();
         System.out.println("tree height = " + T.getTreeHeight());
-        
+
         startTime = System.currentTimeMillis();
         for (int i = 0; i < n; i++) {
             if (T.search(keys[i]) == null) {
                 System.out.println("key " + keys[i] + " not found!");
             }
         }
-        
+
         System.out.println("keys in range [" + 0 + "," + (2 * n - 1) + "] = " + T.range(0, 2 * n - 1));
         System.out.println("keys in range [" + 0 + "," + (n - 1) + "] = " + T.range(0, n - 1));
-        System.out.println("keys in range [" + n + "," + (2 * n - 1) + "] = " + T.range(n, 2 * n - 1));   
+        System.out.println("keys in range [" + n + "," + (2 * n - 1) + "] = " + T.range(n, 2 * n - 1));
         System.out.println("keys in range [" + n / 4 + "," + 3 * n / 4 + "] = " + T.range(n / 4, 3 * n / 4));
-        
+
         endTime = System.currentTimeMillis();
         totalTime = endTime - startTime;
         System.out.println("search time = " + totalTime);
