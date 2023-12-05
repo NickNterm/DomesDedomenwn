@@ -210,7 +210,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println("construction time = " + totalTime);
-        T.print();
+        // T.print();
         System.out.println("tree height = " + T.getTreeHeight());
 
         startTime = System.currentTimeMillis();
