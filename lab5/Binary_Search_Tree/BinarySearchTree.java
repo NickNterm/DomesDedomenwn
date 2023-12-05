@@ -1,3 +1,5 @@
+//Group 1 Pavlos Anagnostou 5440 Nikolaos Ntermaris 5477
+
 import java.util.*;
 
 public class BinarySearchTree<Key extends Comparable<Key>, Item> {
@@ -210,7 +212,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Item> {
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println("construction time = " + totalTime);
-        // T.print();
+        T.print();
         System.out.println("tree height = " + T.getTreeHeight());
 
         startTime = System.currentTimeMillis();

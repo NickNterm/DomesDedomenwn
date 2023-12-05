@@ -1,0 +1,108 @@
+java RedBlackTree 16
+
+Test RedBlack Search Tree
+number of keys n = 16
+construction time = 1
+Printing binary search tree
+
+			R 31[1,1]
+		B 26[2,3]
+			R 25[1,1]
+	R 23[3,5]
+		B 20[1,1]
+B 19[4,13]
+			R 17[1,1]
+		B 12[2,3]
+			R 10[1,1]
+	R 9[3,7]
+			R 8[1,1]
+		B 7[2,3]
+			R 3[1,1]
+
+tree height = 4
+keys in range [0,31] = 13
+keys in range [0,15] = 6
+keys in range [16,31] = 7
+keys in range [4,12] = 5
+search time = 7
+
+----------------------------------------------
+java BinarySearchTree 16
+
+Test Binary Search Tree
+number of keys n = 16
+construction time = 0
+Printing binary search tree
+
+		31[1,1]
+	26[2,3]
+		25[1,1]
+23[7,13]
+			20[1,1]
+		19[5,7]
+				17[3,3]
+						12[1,1]
+					10[2,2]
+			9[4,5]
+				8[1,1]
+	7[6,9]
+		3[1,1]
+
+tree height = 7
+keys in range [0,31] = 13
+keys in range [0,15] = 6
+keys in range [16,31] = 7
+keys in range [4,12] = 5
+search time = 9
+
+----------------------------------------------
+java BinarySearchTree 1000
+
+Test Binary Search Tree
+number of keys n = 1000
+construction time = 3
+tree height = 21
+keys in range [0,1999] = 778
+keys in range [0,999] = 385
+keys in range [1000,1999] = 393
+keys in range [250,750] = 209
+search time = 11
+Test Binary Search Tree
+
+----------------------------------------------
+java BinarySearchTree 1000000
+
+number of keys n = 1000000
+construction time = 1061
+tree height = 51
+keys in range [0,1999999] = 787126
+keys in range [0,999999] = 393213
+keys in range [1000000,1999999] = 393913
+keys in range [250000,750000] = 196592
+search time = 707
+
+----------------------------------------------
+java RedBlackTree 1000
+
+Test RedBlack Search Tree
+number of keys n = 1000
+construction time = 3
+tree height = 12
+keys in range [0,1999] = 778
+keys in range [0,999] = 385
+keys in range [1000,1999] = 393
+keys in range [250,750] = 209
+search time = 10
+
+----------------------------------------------
+java RedBlackTree 1000000
+
+Test RedBlack Search Tree
+number of keys n = 1000000
+construction time = 1076
+tree height = 24
+keys in range [0,1999999] = 787126
+keys in range [0,999999] = 393213
+keys in range [1000000,1999999] = 393913
+keys in range [250000,750000] = 196592
+search time = 687
