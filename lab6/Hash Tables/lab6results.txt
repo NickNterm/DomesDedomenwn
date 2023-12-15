@@ -1,0 +1,67 @@
+java ChainingHT < Dickens.txt > lab6results.txt (f=70%)
+
+Test Hash Table with Chaining
+construction time = 1342
+load factor = 36.45
+number of words = 69984
+contains 'and' 187134 times
+contains 'astonished' 223 times
+contains 'boat' 505 times
+contains 'carol' 14 times
+contains 'city' 807 times
+contains 'scrooge' 316 times
+contains 'the' 262613 times
+contains 'train' 329 times
+contains 'wondered' 202 times
+total running time = 1370
+
+java ChainingHT < Dickens.txt >> lab6results.txt (f=90%)
+
+Test Hash Table with Chaining
+construction time = 1334
+load factor = 72.9
+number of words = 69984
+contains 'and' 187134 times
+contains 'astonished' 223 times
+contains 'boat' 505 times
+contains 'carol' 14 times
+contains 'city' 807 times
+contains 'scrooge' 316 times
+contains 'the' 262613 times
+contains 'train' 329 times
+contains 'wondered' 202 times
+total running time = 1361
+
+java LinearProbingHT < Dickens.txt >> lab6results.txt (f=70%)
+
+Test Hash Table with Linear Probing
+construction time = 1380
+load factor = 36.45
+number of words = 69984
+contains 'and' 187134 times
+contains 'astonished' 223 times
+contains 'boat' 505 times
+contains 'carol' 14 times
+contains 'city' 807 times
+contains 'scrooge' 316 times
+contains 'the' 262613 times
+contains 'train' 329 times
+contains 'wondered' 202 times
+total running time = 1408
+
+java LinearProbingHT < Dickens.txt >> lab6results.txt (f=90%)
+
+Test Hash Table with Linear Probing
+construction time = 1397
+load factor = 72.9
+number of words = 69984
+contains 'and' 187134 times
+contains 'astonished' 223 times
+contains 'boat' 505 times
+contains 'carol' 14 times
+contains 'city' 807 times
+contains 'scrooge' 316 times
+contains 'the' 262613 times
+contains 'train' 329 times
+contains 'wondered' 202 times
+total running time = 1428
