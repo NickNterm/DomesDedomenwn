@@ -1,0 +1,59 @@
+
+Test String Trie
+
+5147752 total number of words in file
+69733 different words
+KB: 204350.0625
+
+contains astonished = 223
+contains carol = 14
+contains pigeon = 22
+contains wondered = 202
+longest prefix of governmental = government
+
+number of words with prefix caro = 13
+words with prefix caro : 
+carol 14
+carolina 15
+carolinas 2
+caroline 33
+carolines 2
+caroling 1
+carolled 2
+carolling 4
+carols 3
+carondelet 1
+carouse 1
+caroused 2
+carousing 6
+
+number of words with prefix sco = 82
+
+words that match sc????e : 
+sceptre 8
+science 80
+scourge 5
+scrooge 316
+scruple 20
+scuffle 33
+scuttle 4
+
+most frequent word = the 262615
+
+number of words with prefix caro = 12
+
+words with prefix caro : 
+carol 13
+carolina 15
+carolinas 2
+caroline 33
+carolines 2
+caroling 1
+carolled 2
+carolling 4
+carols 3
+carondelet 1
+caroused 2
+carousing 6
+
+total time = 2078
